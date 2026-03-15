@@ -1,0 +1,14 @@
+name: docestate-website
+region: nyc
+static_sites:
+- name: docestate-website
+  github:
+    branch: main
+    repo: pigeio/docestate-website
+  build_command: npm run build
+  output_dir: dist
+  envs:
+  - key: GEMINI_API_KEY
+    scope: BUILD_AND_RUN
+    type: SECRET
+    value: ${GEMINI_API_KEY}
