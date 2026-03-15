@@ -13,7 +13,7 @@ interface ContactFormData {
   message: string;
 }
 
-import { db, handleFirestoreError, OperationType } from '../firebase';
+import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function Contact() {
