@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { Target, Users, Heart, ShieldCheck, Zap, Award } from 'lucide-react';
 
 const team = [
-  { name: 'Arjun Reddy', role: 'Founder & CEO', bio: '15+ years in real estate legal compliance.' },
-  { name: 'Priya Sharma', role: 'Operations Head', bio: 'Expert in BBMP liaison and process optimization.' },
-  { name: 'Karthik M.', role: 'Field Lead', bio: 'Manages our network of 20+ field agents across Bengaluru.' }
+  { name: 'Anand Raj', role: 'Team Member' },
+  { name: 'Shyam', role: 'Team Member' },
+  { name: 'Neel', role: 'Team Member' }
 ];
 
 const values = [
@@ -129,16 +129,11 @@ export default function About() {
                 transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <div className="w-48 h-48 rounded-full overflow-hidden mx-auto mb-6 border-4 border-white shadow-xl">
-                  <img
-                    src={`https://i.pravatar.cc/300?img=${i + 10}`}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-32 h-32 rounded-full bg-white flex items-center justify-center mx-auto mb-6 shadow-lg border-2 border-royal/10">
+                  <Users size={48} className="text-royal/40" />
                 </div>
                 <h3 className="text-2xl font-bold text-navy mb-1">{member.name}</h3>
-                <p className="text-royal font-bold text-sm uppercase tracking-widest mb-4">{member.role}</p>
-                <p className="text-slate text-sm max-w-xs mx-auto">{member.bio}</p>
+                <p className="text-royal font-bold text-sm uppercase tracking-widest">{member.role}</p>
               </motion.div>
             ))}
           </div>
