@@ -96,7 +96,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold text-navy text-lg mb-1">Email Address</h4>
-                    <p className="text-slate">docestatesolutions@gmail.com</p>
+                    <p className="text-slate">info@docestatesolution.co.in</p>
                     <p className="text-sm text-royal font-medium mt-2">
                       Note: If someone is not receiving your phone, you can just send us message on whatsapp. Our team will contact you within 24 hrs.
                     </p>
