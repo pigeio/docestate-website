@@ -24,18 +24,13 @@ export default function Contact() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Save to Firebase
-      const path = 'enquiries';
-      await addDoc(collection(db, path), {
-        ...data,
-        status: 'new',
-        createdAt: serverTimestamp(),
-      });
-
-      // Send email notification via Web3Forms
-      await fetch('https://api.web3forms.com/submit', {
+      // Send email notification via Web3Forms (primary)
+      const emailResponse = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: JSON.stringify({
           access_key: '4e659d7b-a0df-484e-b1ee-f5dfb4d52e07',
           subject: `New Enquiry from ${data.fullName}`,
@@ -49,9 +44,25 @@ export default function Contact() {
         }),
       });
 
+      const emailResult = await emailResponse.json();
+      console.log('Web3Forms response:', emailResult);
+
+      // Also save to Firebase (backup, non-blocking)
+      try {
+        const path = 'enquiries';
+        await addDoc(collection(db, path), {
+          ...data,
+          status: 'new',
+          createdAt: serverTimestamp(),
+        });
+      } catch (fbError) {
+        console.warn('Firebase save failed (email was still sent):', fbError);
+      }
+
       setIsSubmitted(true);
     } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, 'enquiries');
+      console.error('Form submission error:', error);
+      alert('Something went wrong. Please try again or call us directly.');
     } finally {
       setIsSubmitting(false);
     }
