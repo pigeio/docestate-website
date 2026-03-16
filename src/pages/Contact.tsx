@@ -24,12 +24,31 @@ export default function Contact() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
+      // Save to Firebase
       const path = 'enquiries';
       await addDoc(collection(db, path), {
         ...data,
         status: 'new',
         createdAt: serverTimestamp(),
       });
+
+      // Send email notification via Web3Forms
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '4e659d7b-a0df-484e-b1ee-f5dfb4d52e07',
+          subject: `New Enquiry from ${data.fullName}`,
+          from_name: 'DocEstate Website',
+          name: data.fullName,
+          phone: data.phone,
+          email: data.email,
+          services: data.services?.join(', ') || 'Not specified',
+          area: data.area || 'Not specified',
+          message: data.message || 'No message',
+        }),
+      });
+
       setIsSubmitted(true);
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, 'enquiries');
